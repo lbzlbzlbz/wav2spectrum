@@ -21,38 +21,11 @@ class wavObj:
 
 
     def on_release(self, event):
-        # nchannels = self.nchannels
-        # framerate = self.framerate
-        # nframes = self.nframes
-        # wave_data = self.wave_data
         if event.inaxes == None:
             print "none"
             return
         self.x_end = event.xdata
         self.plot_fd(x_start=self.x_start, x_end=self.x_end)
-        # if self.x_start<self.x_end:
-        #     time_start = self.x_start
-        #     time_end = self.x_end
-        # else:
-        #     time_start = self.x_end
-        #     time_end = self.x_start
-        # data_start = int(time_start * framerate)
-        # data_end = int(time_end * framerate)
-        # print data_start, data_end
-        # if data_start < 0 or data_end > nframes:
-        #     print 'exceed'
-        #     return
-        # else:
-        #     figure()
-        #     for i in range(0, nchannels):
-        #         loc = nchannels * 100 + 10 + i + 1
-        #         subplot(loc)
-        #         if i == 0:
-        #             fig_title = 'Time region:' + str(round(time_start,2)) + 's to ' + str(round(time_end,2)) + 's';
-        #             title(fig_title)
-        #         wava_data_onechannel = wave_data[i][data_start:data_end]
-        #         magnitude_spectrum(wava_data_onechannel, Fs=framerate, sides='default', scale='dB')
-        #     show()
 
 
 
@@ -66,7 +39,6 @@ class wavObj:
         nchannels = self.nchannels
         nframes = self.nframes
         framerate = self.framerate
-        #wave_data = self.wave_data
         time = numpy.arange(0, nframes) * (1.0 / framerate)
         for i in range(0, nchannels):
             loc = nchannels * 100 + 10 + i + 1
@@ -83,7 +55,6 @@ class wavObj:
         fig.canvas.mpl_connect("button_release_event", self.on_release)
         nchannels = self.nchannels
         framerate = self.framerate
-        #wave_data = self.wave_data
         for i in range(0, nchannels):
             loc = nchannels * 100 + 10 + i + 1
             subplot(loc)
@@ -92,24 +63,11 @@ class wavObj:
         xlabel('Time(s)')
         return 1
 
-    # 画PSD
-    # def plot_psd(self, NFFT=1048576):#1048576
-    #     nchannels = self.nchannels
-    #     framerate = self.framerate
-    #     wave_data = self.wave_data
-    #     for i in range(0, nchannels):
-    #         loc = nchannels * 100 + 10 + i + 1
-    #         subplot(loc)
-    #         p = Periodogram(wave_data[i], NFFT=NFFT, sampling=framerate)
-    #         p.plot()
-    #     return 1
-
     #画频域图
     def plot_fd(self, x_start, x_end):
         nchannels = self.nchannels
         nframes = self.nframes
         framerate = self.framerate
-        #wave_data = self.wave_data
         if x_start < x_end:
             time_start = self.x_start
             time_end = self.x_end
@@ -133,15 +91,6 @@ class wavObj:
                 wava_data_onechannel = self.wave_data[i][data_start:data_end]
                 magnitude_spectrum(wava_data_onechannel, Fs=framerate, sides='default', scale='dB')
             show()
-        #     xf = numpy.fft.fft(wave_data[i]) * 2 / nframes
-        #     xf_abs = numpy.fft.fftshift(abs(xf))
-        #     xf_abs = xf_abs[-floor(nframes / 2):]
-        #     xf_abs = 20 * numpy.log10(xf_abs)
-        #     axis_xf = numpy.linspace(0, framerate / 2, num=floor(nframes / 2))
-        #     plot(axis_xf, xf_abs)
-        #     ylabel('dB')
-        # xlabel('Frequence(Hz)')
-        # return 1
 
     #读取wav文件
     def read_wav(self, path):
@@ -152,7 +101,6 @@ class wavObj:
             wave_data = numpy.fromstring(wave_file.readframes(nframes), dtype=numpy.short)
             wave_file.close()
             wave_data.shape = -1, nchannels
-            #wave_data = wave_data.T
             return nchannels, sampwidth, framerate, nframes, wave_data.T
         except:
             nchannels = 0
