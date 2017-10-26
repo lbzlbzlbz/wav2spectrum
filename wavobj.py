@@ -77,17 +77,20 @@ class wavObj:
         return 1
 
     # 画语图
-    # def plot_sg(self, NFFT=1024):
-    #     nchannels = self.nchannels
-    #     framerate = self.framerate
-    #     wave_data = self.wave_data
-    #     for i in range(0, nchannels):
-    #         loc = nchannels * 100 + 10 + i + 1
-    #         subplot(loc)
-    #         specgram(wave_data[i], NFFT=NFFT, Fs=framerate)
-    #         ylabel('Frequence(Hz)')
-    #     xlabel('Time(s)')
-    #     return 1
+    def plot_sg(self, NFFT=1024):
+        fig = figure()
+        fig.canvas.mpl_connect("button_press_event", self.on_press)
+        fig.canvas.mpl_connect("button_release_event", self.on_release)
+        nchannels = self.nchannels
+        framerate = self.framerate
+        #wave_data = self.wave_data
+        for i in range(0, nchannels):
+            loc = nchannels * 100 + 10 + i + 1
+            subplot(loc)
+            specgram(self.wave_data[i], NFFT=NFFT, Fs=framerate)
+            ylabel('Frequence(Hz)')
+        xlabel('Time(s)')
+        return 1
 
     # 画PSD
     # def plot_psd(self, NFFT=1048576):#1048576
