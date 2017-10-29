@@ -1,5 +1,4 @@
 matplotlib==2.0.0
 numpy==1.11.3
-spectrum==0.7.1
 Wave==0.0.2
 wxPython==4.0.0b2
